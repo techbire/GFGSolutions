@@ -42,20 +42,15 @@ class Solution {
   public:
     /* Should return data of middle node. If linked list is empty, then -1 */
     int getMiddle(Node* head) {
-        // Agar list khali hai, toh return -1
-        if (head == NULL) return -1;
-
-        Node* slow = head;  // Slow pointer ko ek step se badhao
-        Node* fast = head;  // Fast pointer ko do step se badhao
-
-        // Jab tak fast pointer ya uska next null na ho
-        while (fast != NULL && fast->next != NULL) {
-            slow = slow->next;       // Slow ko ek node aage badhao
-            fast = fast->next->next; // Fast ko do node aage badhao
+        // code here
+        Node *slow=head;
+        Node *fast=head->next;
+        while(fast and fast->next)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
         }
-
-        // Jab fast end pe pahunch jaaye, slow middle pe hoga
-        return slow->data;
+        return fast!=NULL?slow->next->data:slow->data;
         
     }
 };

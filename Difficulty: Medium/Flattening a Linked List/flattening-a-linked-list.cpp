@@ -7,37 +7,40 @@ public:
 
     Node(int x) {
         data = x;
-        next = NULL;
-        bottom = NULL;
+        next = nullptr;
+        bottom = nullptr;
     }
-};
-*/
+}; */
 
 class Solution {
   public:
+    
+    Node* merge(Node* a, Node* b) {
+        if (a == NULL) return b;
+        if (b == NULL) return a;
+        
+        Node* result;
+        
+        if (a->data < b->data) {
+            result = a;
+            result->bottom = merge(a->bottom, b);
+        } else {
+            result = b;
+            result->bottom = merge(a, b->bottom);
+        }
+        
+        result->next = NULL;
+        return result;
+    }
+    
     Node* flatten(Node* root) {
-        vector<int> v;
-        Node* t = root;
-
-        while (t) {
-            Node* b = t;
-            while (b) {
-                v.push_back(b->data);
-                b = b->bottom;
-            }
-            t = t->next;
-        }
-
-        sort(v.begin(), v.end());
-
-        Node* head = new Node(v[0]);
-        Node* cur = head;
-
-        for (int i = 1; i < v.size(); i++) {
-            cur->bottom = new Node(v[i]);
-            cur = cur->bottom;
-        }
-
-        return head;
+        if (root == NULL || root->next == NULL)
+            return root;
+            
+        root->next = flatten(root->next);
+        
+        root = merge(root, root->next);
+        
+        return root;
     }
 };
